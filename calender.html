@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 800px;
+            margin: 0 auto;
+            table-layout: fixed; /* Cố định độ rộng của bảng */
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 20px;
+            text-align: center;
+            width: 100px;
+            word-wrap: break-word; /* Tự động ngắt dòng nếu cần */
+        }
+        input[type="text"] {
+            box-sizing: border-box; /* Đảm bảo rằng kích thước của ô text bao gồm cả padding và border */
+            width: calc(100% - 20px); /* Độ rộng ô text bằng độ rộng của ô td trừ đi tổng padding của ô td */
+            margin: 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th></th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+            <th>Sunday</th>
+        </tr>
+
+        <tr>
+            <td>Morning<br>(6h-12h)</td>
+            <td><input type="text" id="mondayMorning"></td>
+            <td><input type="text" id="tuesdayMorning"></td>
+            <td><input type="text" id="wednesdayMorning"></td>
+            <td><input type="text" id="thursdayMorning"></td>
+            <td><input type="text" id="fridayMorning"></td>
+            <td><input type="text" id="saturdayMorning"></td>
+            <td><input type="text" id="sundayMorning"></td>
+        </tr>
+
+        <tr>
+            <td>Afternoon<br>(12h-18h)</td>
+            <td><input type="text" id="mondayAfternoon"></td>
+            <td><input type="text" id="tuesdayAfternoon"></td>
+            <td><input type="text" id="wednesdayAfternoon"></td>
+            <td><input type="text" id="thursdayAfternoon"></td>
+            <td><input type="text" id="fridayAfternoon"></td>
+            <td><input type="text" id="saturdayAfternoon"></td>
+            <td><input type="text" id="sundayAfternoon"></td>
+        </tr>
+
+        <tr>
+            <td>Evening<br>(18h-6h)</td>
+            <td><input type="text" id="mondayEvening"></td>
+            <td><input type="text" id="tuesdayEvening"></td>
+            <td><input type="text" id="wednesdayEvening"></td>
+            <td><input type="text" id="thursdayEvening"></td>
+            <td><input type="text" id="fridayEvening"></td>
+            <td><input type="text" id="saturdayEvening"></td>
+            <td><input type="text" id="sundayEvening"></td>
+        </tr>
+
+    </table>
+
+    <script>
+        // Khôi phục dữ liệu từ Local Storage khi trang được tải lại
+        window.onload = function() {
+            restoreData();
+        };
+
+        // Lưu trữ dữ liệu khi người dùng nhập vào ô văn bản
+        document.querySelectorAll('input[type="text"]').forEach(input => {
+            input.addEventListener('input', function() {
+                localStorage.setItem(this.id, this.value);
+            });
+        });
+
+        // Hàm khôi phục dữ liệu từ Local Storage
+        function restoreData() {
+            document.querySelectorAll('input[type="text"]').forEach(input => {
+                const savedValue = localStorage.getItem(input.id);
+                if (savedValue !== null) {
+                    input.value = savedValue;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
