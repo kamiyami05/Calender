@@ -26,7 +26,7 @@
         }
         .red-row {
             background-color: red;
-            color: white;
+            color: white; /* Màu chữ trắng để nổi bật trên nền đỏ */
         }
     </style>
 </head>
@@ -127,7 +127,6 @@
             newTime = day + "/" + month + "/" + year + " " + hours + ":" + minutes + ":" + seconds;
 
             // Cập nhật lại đồng hồ mỗi giây
-            document.getElementById("clock").innerText = newTime;
             setTimeout(updateClock, 1000);
         }
 
