@@ -24,10 +24,6 @@
             margin: 0;
             text-align: center;
         }
-        .red-row {
-            background-color: red;
-            color: white; /* Màu chữ trắng để nổi bật trên nền đỏ */
-        }
     </style>
 </head>
 <body>
@@ -88,7 +84,6 @@
         window.onload = function() {
             restoreData();
             updateClock(); // Gọi hàm cập nhật đồng hồ khi trang tải lại
-            highlightCurrentDay(); // Gọi hàm để làm nổi bật hàng chứa ngày hiện tại
         };
 
         // Lưu trữ dữ liệu khi người dùng nhập vào ô văn bản
@@ -130,15 +125,13 @@
             setTimeout(updateClock, 1000);
         }
 
-        // Hàm để làm nổi bật hàng chứa ngày hiện tại
-        function highlightCurrentDay() {
-            var currentDate = new Date();
-            var currentDay = currentDate.getDay(); // Trả về số từ 0 (Chủ Nhật) đến 6 (Thứ Bảy)
-
-            // Thêm lớp CSS cho hàng chứa ngày hiện tại
-            var tableRows = document.querySelectorAll('tr');
-            tableRows[currentDay + 1].classList.add('red-row'); // +1 vì hàng đầu tiên là tiêu đề của bảng
-        }
+        // Hàm cập nhật nội dung trên trang web chỉ khi nội dung mới đã sẵn sàng
+        setInterval(function() {
+            if (newTime !== "") {
+                document.getElementById("clock").innerText = newTime;
+                newTime = ""; // Reset biến trung gian
+            }
+        }, 50); // Kiểm tra mỗi 50ms
     </script>
 </body>
 </html>
