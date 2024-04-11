@@ -28,10 +28,52 @@
 </head>
 <body>
     <table>
-        <!-- Bảng nhập dữ liệu -->
+        <tr>
+            <th></th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+            <th>Sunday</th>
+        </tr>
+
+        <tr>
+            <td>Morning<br>(6h-12h)</td>
+            <td><input type="text" id="mondayMorning"></td>
+            <td><input type="text" id="tuesdayMorning"></td>
+            <td><input type="text" id="wednesdayMorning"></td>
+            <td><input type="text" id="thursdayMorning"></td>
+            <td><input type="text" id="fridayMorning"></td>
+            <td><input type="text" id="saturdayMorning"></td>
+            <td><input type="text" id="sundayMorning"></td>
+        </tr>
+
+        <tr>
+            <td>Afternoon<br>(12h-18h)</td>
+            <td><input type="text" id="mondayAfternoon"></td>
+            <td><input type="text" id="tuesdayAfternoon"></td>
+            <td><input type="text" id="wednesdayAfternoon"></td>
+            <td><input type="text" id="thursdayAfternoon"></td>
+            <td><input type="text" id="fridayAfternoon"></td>
+            <td><input type="text" id="saturdayAfternoon"></td>
+            <td><input type="text" id="sundayAfternoon"></td>
+        </tr>
+
+        <tr>
+            <td>Evening<br>(18h-6h)</td>
+            <td><input type="text" id="mondayEvening"></td>
+            <td><input type="text" id="tuesdayEvening"></td>
+            <td><input type="text" id="wednesdayEvening"></td>
+            <td><input type="text" id="thursdayEvening"></td>
+            <td><input type="text" id="fridayEvening"></td>
+            <td><input type="text" id="saturdayEvening"></td>
+            <td><input type="text" id="sundayEvening"></td>
+        </tr>
     </table>
 
-    <!-- Phần tử để hiển thị thời gian -->
+    <!-- Phần tử để hiển thị ngày, tháng, năm và thời gian -->
     <div id="clock" style="text-align: center; font-size: 24px; margin-top: 20px;"></div>
 
     <script>
