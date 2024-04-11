@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="0; url=https://kamiyami05.github.io/Calender/calender.html" />
     <title>Calendar</title>
     <style>
         table {
             border-collapse: collapse;
             width: 800px;
             margin: 0 auto;
-            table-layout: fixed; /* Cố định độ rộng của bảng */
+            table-layout: fixed;
         }
         th, td {
             border: 1px solid black;
             padding: 20px;
             text-align: center;
             width: 100px;
-            word-wrap: break-word; /* Tự động ngắt dòng nếu cần */
+            word-wrap: break-word;
         }
         input[type="text"] {
             box-sizing: border-box; /* Đảm bảo rằng kích thước của ô text bao gồm cả padding và border */
@@ -74,10 +75,14 @@
 
     </table>
 
+    <!-- Thêm một phần tử div với id "clock" để hiển thị thời gian -->
+    <div id="clock"></div>
+
     <script>
         // Khôi phục dữ liệu từ Local Storage khi trang được tải lại
         window.onload = function() {
             restoreData();
+            updateClock(); // Gọi hàm cập nhật đồng hồ khi trang tải lại
         };
 
         // Lưu trữ dữ liệu khi người dùng nhập vào ô văn bản
@@ -95,6 +100,25 @@
                     input.value = savedValue;
                 }
             });
+        }
+
+        // Hàm cập nhật đồng hồ
+        function updateClock() {
+            var now = new Date();
+            var hours = now.getHours();
+            var minutes = now.getMinutes();
+            var seconds = now.getSeconds();
+
+            // Định dạng thời gian
+            hours = (hours < 10 ? "0" : "") + hours;
+            minutes = (minutes < 10 ? "0" : "") + minutes;
+            seconds = (seconds < 10 ? "0" : "") + seconds;
+
+            // Hiển thị thời gian trong phần tử div có id "clock"
+            document.getElementById("clock").innerText = hours + ":" + minutes + ":" + seconds;
+
+            // Cập nhật lại đồng hồ mỗi giây
+            setTimeout(updateClock, 1000);
         }
     </script>
 </body>
