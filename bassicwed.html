@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="0; url=https://kamiyami05.github.io/Calender/bassicwed.html" />
+    <title>Bassic Wed</title>
+    <style>
+       body {
+            background-image: url('img/hinhnen.jpg');
+            background-position: center;
+            background-attachment: fixed; /* Đảm bảo hình ảnh nền được cố định và không cuộn theo nội dung */
+            background-size: cover;
+        }
+        #button { /* chỉnh div */
+            display: flex; /* Sử dụng flexbox để căn chỉnh các nút */
+            justify-content: flex-end; /* Căn chỉnh các nút về phía bên phải */
+            margin-top: 10px;
+            margin-right: 30px;
+        }
+        button { /* chỉnh phần tử trong div */
+            background-color: transparent;
+            padding: 10px;
+            border-radius: 30px;
+            margin-left: 20px;
+            border: 1px solid white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size:20px;
+            color: white;
+        }
+        button:hover{
+            background-color: white;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="button">
+        <button type="button">Home</button>
+        <button type="button">Contact</button>
+        <button type="button">Blog</button>
+        <button type="button">Sign up</button>
+    </div>
+
+</body>
+</html>
