@@ -3,51 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enhanced Calendar</title>
+    <meta http-equiv="refresh" content="0; url=https://kamiyami05.github.io/Calender/calender.html" />
+    <title>Calendar</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-        }
         table {
             border-collapse: collapse;
-            width: 80%;
-            margin: 20px auto;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            width: 800px;
+            margin: 0 auto;
+            table-layout: fixed;
         }
         th, td {
-            border: 1px solid #ddd;
-            padding: 15px;
+            border: 1px solid black;
+            padding: 20px;
             text-align: center;
-        }
-        th {
-            background-color: #3498db;
-            color: white;
+            width: 100px;
+            word-wrap: break-word;
         }
         input[type="text"] {
-            width: 95%;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            box-sizing: border-box;
+            width: calc(100% - 20px);
+            margin: 0;
             text-align: center;
         }
-        button {
-            padding: 10px 20px;
-            margin: 10px;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        #clearData { background-color: red; color: white; }
-        #exportData { background-color: green; color: white; }
     </style>
 </head>
 <body>
-    <h2>Weekly Planner</h2>
     <table>
         <tr>
             <th></th>
@@ -60,7 +40,7 @@
             <th>Sunday</th>
         </tr>
         <tr>
-            <td>Morning (6h-12h)</td>
+            <td>Morning<br>(6h-12h)</td>
             <td><input type="text" id="mondayMorning"></td>
             <td><input type="text" id="tuesdayMorning"></td>
             <td><input type="text" id="wednesdayMorning"></td>
@@ -70,7 +50,7 @@
             <td><input type="text" id="sundayMorning"></td>
         </tr>
         <tr>
-            <td>Afternoon (12h-18h)</td>
+            <td>Afternoon<br>(12h-18h)</td>
             <td><input type="text" id="mondayAfternoon"></td>
             <td><input type="text" id="tuesdayAfternoon"></td>
             <td><input type="text" id="wednesdayAfternoon"></td>
@@ -80,7 +60,7 @@
             <td><input type="text" id="sundayAfternoon"></td>
         </tr>
         <tr>
-            <td>Evening (18h-6h)</td>
+            <td>Evening<br>(18h-6h)</td>
             <td><input type="text" id="mondayEvening"></td>
             <td><input type="text" id="tuesdayEvening"></td>
             <td><input type="text" id="wednesdayEvening"></td>
@@ -90,15 +70,15 @@
             <td><input type="text" id="sundayEvening"></td>
         </tr>
     </table>
-    <div>
-        <button id="clearData">Clear Data</button>
-        <button id="exportData">Export JSON</button>
-    </div>
-    <p>Hôm nay là <span id="clock"></span></p>
+
+    Hôm nay là <div id="date"></div>
+    <div id="clock"></div>
+
     <script>
         window.onload = function() {
             restoreData();
             updateClock();
+            updateDate();
         };
 
         document.querySelectorAll('input[type="text"]').forEach(input => {
@@ -118,28 +98,25 @@
 
         function updateClock() {
             var now = new Date();
-            var timeString = now.toLocaleTimeString();
-            document.getElementById("clock").innerText = timeString;
+            var hours = now.getHours();
+            var minutes = now.getMinutes();
+            var seconds = now.getSeconds();
+            hours = (hours < 10 ? "0" : "") + hours;
+            minutes = (minutes < 10 ? "0" : "") + minutes;
+            seconds = (seconds < 10 ? "0" : "") + seconds;
+            document.getElementById("clock").innerText = hours + ":" + minutes + ":" + seconds;
             setTimeout(updateClock, 1000);
         }
 
-        document.getElementById("clearData").addEventListener("click", function() {
-            localStorage.clear();
-            document.querySelectorAll('input[type="text"]').forEach(input => input.value = "");
-        });
-
-        document.getElementById("exportData").addEventListener("click", function() {
-            let data = {};
-            document.querySelectorAll('input[type="text"]').forEach(input => {
-                data[input.id] = input.value;
-            });
-            let jsonData = JSON.stringify(data, null, 2);
-            let blob = new Blob([jsonData], { type: "application/json" });
-            let a = document.createElement("a");
-            a.href = URL.createObjectURL(blob);
-            a.download = "calendar_data.json";
-            a.click();
-        });
+        function updateDate() {
+            var now = new Date();
+            var day = now.getDate();
+            var month = now.getMonth() + 1;
+            var year = now.getFullYear();
+            day = (day < 10 ? "0" : "") + day;
+            month = (month < 10 ? "0" : "") + month;
+            document.getElementById("date").innerText = day + "/" + month + "/" + year;
+        }
     </script>
 </body>
 </html>
