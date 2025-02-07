@@ -3,30 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendar</title>
+    <title>Enhanced Calendar</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
         table {
             border-collapse: collapse;
-            width: 800px;
-            margin: 0 auto;
-            table-layout: fixed;
+            width: 80%;
+            margin: 20px auto;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         th, td {
-            border: 1px solid black;
-            padding: 20px;
+            border: 1px solid #ddd;
+            padding: 15px;
             text-align: center;
-            width: 100px;
-            word-wrap: break-word;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
         }
         input[type="text"] {
-            box-sizing: border-box;
-            width: calc(100% - 20px);
-            margin: 0;
+            width: 95%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
             text-align: center;
         }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        #clearData { background-color: red; color: white; }
+        #exportData { background-color: green; color: white; }
     </style>
 </head>
 <body>
+    <h2>Weekly Planner</h2>
     <table>
         <tr>
             <th></th>
@@ -38,9 +59,8 @@
             <th>Saturday</th>
             <th>Sunday</th>
         </tr>
-
         <tr>
-            <td>Morning<br>(6h-12h)</td>
+            <td>Morning (6h-12h)</td>
             <td><input type="text" id="mondayMorning"></td>
             <td><input type="text" id="tuesdayMorning"></td>
             <td><input type="text" id="wednesdayMorning"></td>
@@ -49,9 +69,8 @@
             <td><input type="text" id="saturdayMorning"></td>
             <td><input type="text" id="sundayMorning"></td>
         </tr>
-
         <tr>
-            <td>Afternoon<br>(12h-18h)</td>
+            <td>Afternoon (12h-18h)</td>
             <td><input type="text" id="mondayAfternoon"></td>
             <td><input type="text" id="tuesdayAfternoon"></td>
             <td><input type="text" id="wednesdayAfternoon"></td>
@@ -60,9 +79,8 @@
             <td><input type="text" id="saturdayAfternoon"></td>
             <td><input type="text" id="sundayAfternoon"></td>
         </tr>
-
         <tr>
-            <td>Evening<br>(18h-6h)</td>
+            <td>Evening (18h-6h)</td>
             <td><input type="text" id="mondayEvening"></td>
             <td><input type="text" id="tuesdayEvening"></td>
             <td><input type="text" id="wednesdayEvening"></td>
@@ -72,28 +90,23 @@
             <td><input type="text" id="sundayEvening"></td>
         </tr>
     </table>
-
-    <!-- Phần tử để hiển thị ngày, tháng, năm và thời gian -->
-    <div id="clock" style="text-align: center; font-size: 24px; margin-top: 20px;"></div>
-
+    <div>
+        <button id="clearData">Clear Data</button>
+        <button id="exportData">Export JSON</button>
+    </div>
+    <p>Hôm nay là <span id="clock"></span></p>
     <script>
-        // Biến trung gian để lưu trữ thời gian mới
-        var newTime = "";
-
-        // Khôi phục dữ liệu từ Local Storage khi trang được tải lại
         window.onload = function() {
             restoreData();
-            updateClock(); // Gọi hàm cập nhật đồng hồ khi trang tải lại
+            updateClock();
         };
 
-        // Lưu trữ dữ liệu khi người dùng nhập vào ô văn bản
         document.querySelectorAll('input[type="text"]').forEach(input => {
             input.addEventListener('input', function() {
                 localStorage.setItem(this.id, this.value);
             });
         });
 
-        // Hàm khôi phục dữ liệu từ Local Storage
         function restoreData() {
             document.querySelectorAll('input[type="text"]').forEach(input => {
                 const savedValue = localStorage.getItem(input.id);
@@ -103,35 +116,30 @@
             });
         }
 
-        // Hàm cập nhật đồng hồ
         function updateClock() {
             var now = new Date();
-            var day = now.getDate(); // Lấy ngày
-            var month = now.getMonth() + 1; // Lấy tháng (tháng bắt đầu từ 0)
-            var year = now.getFullYear(); // Lấy năm
-            var hours = now.getHours();
-            var minutes = now.getMinutes();
-            var seconds = now.getSeconds();
-
-            // Định dạng thời gian
-            hours = (hours < 10 ? "0" : "") + hours;
-            minutes = (minutes < 10 ? "0" : "") + minutes;
-            seconds = (seconds < 10 ? "0" : "") + seconds;
-
-            // Tạo chuỗi thời gian mới
-            newTime = day + "/" + month + "/" + year + " " + hours + ":" + minutes + ":" + seconds;
-
-            // Cập nhật lại đồng hồ mỗi giây
+            var timeString = now.toLocaleTimeString();
+            document.getElementById("clock").innerText = timeString;
             setTimeout(updateClock, 1000);
         }
 
-        // Hàm cập nhật nội dung trên trang web chỉ khi nội dung mới đã sẵn sàng
-        setInterval(function() {
-            if (newTime !== "") {
-                document.getElementById("clock").innerText = newTime;
-                newTime = ""; // Reset biến trung gian
-            }
-        }, 50); // Kiểm tra mỗi 50ms
+        document.getElementById("clearData").addEventListener("click", function() {
+            localStorage.clear();
+            document.querySelectorAll('input[type="text"]').forEach(input => input.value = "");
+        });
+
+        document.getElementById("exportData").addEventListener("click", function() {
+            let data = {};
+            document.querySelectorAll('input[type="text"]').forEach(input => {
+                data[input.id] = input.value;
+            });
+            let jsonData = JSON.stringify(data, null, 2);
+            let blob = new Blob([jsonData], { type: "application/json" });
+            let a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "calendar_data.json";
+            a.click();
+        });
     </script>
 </body>
 </html>
